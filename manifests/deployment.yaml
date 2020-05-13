@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tunnel-operator
+  namespace: tunnel
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      application: tunnel-operator
+  template:
+    metadata:
+      labels:
+        application: tunnel-operator
+    spec:
+      serviceAccountName: tunnel-operator
+      containers:
+      - name: digger
+        image: wurbanski/tunnel-operator:latest
+        imagePullPolicy: Always
+        resources:
+          request:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi

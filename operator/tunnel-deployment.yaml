@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tunnel-{name}-{namespace}
+  namespace: tunnel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: tunnel-{name}-{namespace}
+  template:
+    metadata:
+      labels:
+        run: tunnel-{name}-{namespace}
+    spec:
+      containers:
+      - image: wurbanski/ssh-tunnel-client:latest
+        imagePullPolicy: Always
+        name: tunnel
+        args: 
+          - "-R"
+          - "127.0.0.1:$(remote_port):$(svc):$(forward_port)"
+        env:
+          - name: svc
+            value: "{name}.{namespace}"
+          - name: remote_port
+            value: "{remote_port}"
+          - name: forward_port
+            value: "{forward_port}"
+        volumeMounts:
+        - name: ssh-keys
+          mountPath: /keys
+        - name: ssh-hostkeys
+          mountPath: /config
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            cpu: 50m
+            memory: 64Mi
+      volumes:
+      - name: ssh-keys
+        secret:
+          secretName: tunnel-ssh-key
+          defaultMode: 0600
+      - name: ssh-hostkeys
+        configMap:
+          name: ssh-tunnel-config
+          defaultMode: 0600

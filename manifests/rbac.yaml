@@ -1,0 +1,51 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: tunnel-operator-clusterrole
+rules:
+  - apiGroups: ['']
+    resources: [services]
+    verbs: ['*']
+  - apiGroups: [events.k8s.io]
+    resources: [events]
+    verbs: ['*']
+  - apiGroups: [""]
+    resources: [events]
+    verbs: ['*']
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  namespace: tunnel
+  name: tunnel-operator-role-namespaced
+rules:
+  - apiGroups: [apps]
+    resources: [deployments]
+    verbs: [create, patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: tunnel-operator-clusterrole-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tunnel-operator-clusterrole
+subjects:
+  - kind: ServiceAccount
+    name: tunnel-operator
+    namespace: tunnel
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  namespace: tunnel
+  name: tunnel-operator-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: tunnel-operator-role-namespaced
+subjects:
+  - kind: ServiceAccount
+    name: tunnel-operator
