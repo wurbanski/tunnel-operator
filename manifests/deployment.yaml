@@ -19,7 +19,7 @@ spec:
       serviceAccountName: tunnel-operator
       containers:
       - name: digger
-        image: wurbanski/tunnel-operator:latest
+        image: quay.io/wurbanski/tunnel-operator:latest
         imagePullPolicy: Always
         resources:
           request:

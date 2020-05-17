@@ -14,7 +14,7 @@ spec:
         run: tunnel-{name}-{namespace}
     spec:
       containers:
-      - image: wurbanski/ssh-tunnel-client:latest
+      - image: quay.io/wurbanski/ssh-tunnel-client:latest
         imagePullPolicy: Always
         name: tunnel
         args: 

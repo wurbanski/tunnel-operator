@@ -1,5 +1,7 @@
 # tunnel-operator
 
+[![Docker Repository on Quay](https://quay.io/repository/wurbanski/tunnel-operator/status "Docker Repository on Quay")](https://quay.io/repository/wurbanski/tunnel-operator) [![Docker Repository on Quay](https://quay.io/repository/wurbanski/ssh-tunnel-client/status "Docker Repository on Quay")](https://quay.io/repository/wurbanski/ssh-tunnel-client) 
+
 Simple kubernetes operator creating SSH tunnels for services
 
 ## Why
