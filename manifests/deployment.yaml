@@ -22,7 +22,7 @@ spec:
         image: quay.io/wurbanski/tunnel-operator:latest
         imagePullPolicy: Always
         resources:
-          request:
+          requests:
             cpu: 100m
             memory: 128Mi
           limits:
