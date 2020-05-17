@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ssh-tunnel-config
+  namespace: tunnel
+data:
+  known_hosts: >
+    [example.com]:22 <some-host-key>
+  tunnel_host: example.com
+  tunnel_port: '22'
+  tunnel_user: digger
