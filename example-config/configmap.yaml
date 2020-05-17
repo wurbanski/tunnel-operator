@@ -4,6 +4,7 @@ metadata:
   name: ssh-tunnel-config
   namespace: tunnel
 data:
+  # This can be generated using the `ssh-keyscan` command
   known_hosts: >
     [example.com]:22 <some-host-key>
   tunnel_host: example.com
