@@ -21,7 +21,7 @@ The tunnel is then created as a scale-1 deployment in `tunnel` namespace.
 Further tuning through annotations:
 
 * `tunnel-operator.wurbanski.me/forward-port: "<number>"` - use specified port to forward from service. The same port will be chosen on the remote, unless overriden as below.
-* `tunnel-operator.wurbanski.me/remote-port: "<number>` - use specified remote port (still prefixed with 127.0.0.1 on remote host)
+* `tunnel-operator.wurbanski.me/remote-port: "<number>"` - use specified remote port (still prefixed with 127.0.0.1 on remote host)
 
 ## Is it safe?
 
@@ -35,7 +35,7 @@ Some good resources with configuration guidelines include:
 
 ## Future:
 
-[ ] jsonnet files for manifests
-[ ] automation of registering endpoints on the server
-[ ] tests?
+- [ ] jsonnet files for manifests
+- [ ] automation of registering endpoints on the server
+- [ ] tests?
 
