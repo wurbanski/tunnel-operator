@@ -45,17 +45,17 @@ def update_tunnel(meta, spec, namespace, logger, **kwargs):
     default_port = spec['ports'][0]['port']
     forward_port = meta['annotations'].get(f'{ann_ns}/forward-port', default_port)
     remote_port = meta['annotations'].get(f'{ann_ns}/remote-port', default_port)
-    
+
     deployment_patch = {
         'spec': {
             'template': {
                 'spec': {
                     'containers': [
-                        {'name': 'tunnel', 
+                        {'name': 'tunnel',
                          'env': [
                              {'name': 'svc', 'value': f'{name}.{namespace}'},
-                             {'name': 'remote_port', 'value': str(remote_port) },
-                             {'name': 'forward_port', 'value': str(forward_port) }
+                             {'name': 'remote_port', 'value': str(remote_port)},
+                             {'name': 'forward_port', 'value': str(forward_port)}
                          ]
                         }
                     ]
@@ -65,4 +65,7 @@ def update_tunnel(meta, spec, namespace, logger, **kwargs):
     }
 
     api = kubernetes.client.AppsV1Api()
-    obj = api.patch_namespaced_deployment(f"tunnel-{name}-{namespace}", "tunnel", deployment_patch)
+    try:
+        api.patch_namespaced_deployment(f"tunnel-{name}-{namespace}", "tunnel", deployment_patch)
+    except kubernetes.client.rest.ApiException:
+        create_tunnel(meta, spec, namespace, logger, **kwargs)
